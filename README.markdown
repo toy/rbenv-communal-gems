@@ -26,7 +26,7 @@ Waste less time.  Waste less space.  And go back to using utility gems (like
 ## Installation
 
     mkdir -p "$(rbenv root)"/plugins
-    git clone https://github.com/tpope/rbenv-communal-gems.git \
+    git clone https://github.com/toy/rbenv-communal-gems.git \
       "$(rbenv root)"/plugins/communal-gems
     rbenv communize --all
 
