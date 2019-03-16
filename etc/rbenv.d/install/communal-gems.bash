@@ -12,12 +12,5 @@ sequester_gems() {
 }
 
 communize_gems() {
-  case $VERSION_NAME in
-    [0-9]*)
-      rbenv communize "$VERSION_NAME" || true
-      ;;
-    *)
-      echo "Not communizing non-MRI version $VERSION_NAME"
-      ;;
-  esac
+  rbenv communize "$VERSION_NAME" || true
 }

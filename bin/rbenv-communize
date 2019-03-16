@@ -18,6 +18,9 @@ communize() {
   local gemdir="$root/lib/ruby/gems"
   if [ -L "$gemdir" -a -f "$root/etc/gemrc" ]; then
     echo "Gems for $1 are already communal"
+  elif [[ "$version" != [0-9]* ]]; then
+    echo "Not communizing non-MRI version $version"
+    return 1
   elif [ -d "$gemdir" ]; then
     rm -rf "$gemdir"
     mkdir -p "$RBENV_ROOT/gems"
@@ -42,7 +45,7 @@ if [ $# = 0 -o --help = "$1" ]; then
 elif [ --all = "$1" ]; then
   for version in $(rbenv-versions --bare); do
     [ -L "$RBENV_ROOT/versions/$version" ] || \
-      communize "$version"
+      communize "$version" || true
   done
 else
   for version in "$@"; do
