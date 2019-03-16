@@ -13,9 +13,9 @@ originated in the same paranoia that gave us gemsets, and now that we have
 Bundler, they can be eschewed.  This plugin makes it easy to maintain a
 unified gem home.
 
-The `rbenv communize` command blows away (`rm -rf` style) the `lib/ruby/gems`
-directory in the given version and replaces it with a symlink to
-`~/.rbenv/gems`.  The opposite command is `rbenv sequester`, which removes the
+The `rbenv communize` command moves or rsyncs the `lib/ruby/gems`
+directory in the given version to `~/.rbenv/gems` and replaces it with a
+symlink. The opposite command is `rbenv sequester`, which removes the
 symlink and recreates it as an empty directory.  If you are using
 [ruby-build][] as a plugin, new installs will be automatically communized.
 (Problem?)

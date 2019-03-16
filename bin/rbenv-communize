@@ -13,17 +13,29 @@ if [ "$1" = "--complete" ]; then
   exec rbenv-versions --bare
 fi
 
+communal_dir="$RBENV_ROOT/gems"
+
 communize() {
-  local root="$RBENV_ROOT/versions/$1"
+  local version="$1"
+  local root="$RBENV_ROOT/versions/$version"
   local gemdir="$root/lib/ruby/gems"
-  if [ -L "$gemdir" -a -f "$root/etc/gemrc" ]; then
+  if [ -L "$gemdir" ]; then
     echo "Gems for $1 are already communal"
   elif [[ "$version" != [0-9]* ]]; then
     echo "Not communizing non-MRI version $version"
     return 1
   elif [ -d "$gemdir" ]; then
+    for src in "$gemdir"/*; do
+      local name="$(basename "$src")"
+      local dst="$communal_dir/$name"
+      if [ -d "$dst" ]; then
+        rsync -av "$src"/ "$dst"/
+      else
+        mkdir -p "$communal_dir"
+        mv "$src" "$communal_dir"
+      fi
+    done
     rm -rf "$gemdir"
-    mkdir -p "$RBENV_ROOT/gems"
     ln -s ../../../../gems "$gemdir"
     echo "Communized gems for $1"
   else
